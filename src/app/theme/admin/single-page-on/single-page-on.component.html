@@ -1,0 +1,23 @@
+<div class="page-body">
+  <ngb-tabset [justify]="'start'" [activeId]="(activedTab$ | async)" (tabChange)="beforeChange($event)">
+    <ngb-tab [id]="tab.code" *ngFor="let tab of (tabMenu$ | async) as tabMenu">
+      <ng-template ngbTabTitle>
+        <span>{{ tab.name }}</span>
+        <span class="close" (click)="onCloseClick(tab, $event)">
+          &times;
+        </span>
+      </ng-template>
+      <ng-template ngbTabContent>
+        <div>
+          <div class="row">
+            <div class="col-sm-12">
+              <app-user *ngIf="tab.code === 'ADMIN_USER'"></app-user>
+              <!-- <app-customer-new *ngIf="tab.code === 'ADMIN_USER'"></app-customer-new>
+              <app-notification *ngIf="tab.code === 'ADMIN_USER'"></app-notification> -->
+            </div>
+          </div>
+        </div>
+      </ng-template>
+    </ngb-tab>
+  </ngb-tabset>
+</div>
