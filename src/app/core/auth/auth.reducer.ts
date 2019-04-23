@@ -1,3 +1,4 @@
+import { MainMenuItems } from 'src/app/shared/menu-items/menu-items';
 import { AuthActions, AuthActionTypes } from './auth.actions';
 import { AuthState } from './auth.models';
 
@@ -10,7 +11,7 @@ export function authReducer(
   state: AuthState = initialState,
   action: AuthActions
 ): AuthState {
-  let oldTab: any[];
+  let oldTab: MainMenuItems[];
   let index: number;
   switch (action.type) {
     case AuthActionTypes.LOGIN:

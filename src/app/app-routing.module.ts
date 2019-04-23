@@ -19,7 +19,7 @@ const routes: Routes = [
         loadChildren: './theme/admin/admin.module#AdminModule'
       }
     ],
-    canActivate: [AuthGuardService]
+    canActivate: []
   },
   {
     path: '',

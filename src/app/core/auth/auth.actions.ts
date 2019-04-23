@@ -1,5 +1,8 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Action } from '@ngrx/store';
+import { MainMenuItems } from 'src/app/shared/menu-items/menu-items';
+import { ICredentials } from 'src/app/shared/model/credentials.model';
+import { IUser } from 'src/app/shared/model/user.model';
 
 export enum AuthActionTypes {
   LOGIN = '[Auth] Login',
@@ -29,7 +32,7 @@ export class ActionAuthLogout implements Action {
 
 export class ActionAuthenticate implements Action {
   readonly type = AuthActionTypes.AUTHENTICATE;
-  constructor(readonly payload: { credentials: any }) { }
+  constructor(readonly payload: { credentials: ICredentials }) { }
 }
 
 export class ActionAuthenticateSuccess implements Action {
@@ -50,7 +53,7 @@ export class ActionFetchAccount implements Action {
 
 export class ActionFetchAccountSuccess implements Action {
   readonly type = AuthActionTypes.FETCH_ACCOUNT_SUCCESS;
-  constructor(readonly payload: { account: any }) { }
+  constructor(readonly payload: { account: IUser }) { }
 }
 
 export class ActionFetchAccountError implements Action {
@@ -65,7 +68,7 @@ export class ActionFetchAccountMenu implements Action {
 
 export class ActionFetchAccountMenuSuccess implements Action {
   readonly type = AuthActionTypes.FETCH_ACCOUNT_MENU_SUCCESS;
-  constructor(readonly payload: { menu: any[] }) { }
+  constructor(readonly payload: { menu: MainMenuItems[] }) { }
 }
 
 export class ActionFetchAccountMenuError implements Action {
@@ -80,12 +83,12 @@ export class ActionLoginSuccess implements Action {
 
 export class ActionAddOrActiveTab implements Action {
   readonly type = AuthActionTypes.TAB_ADD_OR_ACTIVE;
-  constructor(readonly payload: any) { }
+  constructor(readonly payload: MainMenuItems) { }
 }
 
 export class ActionRemoveTab implements Action {
   readonly type = AuthActionTypes.TAB_REMOVE;
-  constructor(readonly payload: any) { }
+  constructor(readonly payload: MainMenuItems) { }
 }
 
 export class ActionActiveTab implements Action {

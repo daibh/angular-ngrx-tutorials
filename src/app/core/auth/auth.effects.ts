@@ -9,6 +9,7 @@ import { LocalStorageService } from '../local-storage/local-storage.service';
 import { ActionAuthenticate, ActionAuthenticateError, ActionAuthenticateSuccess, ActionAuthLogin, ActionAuthLogout, ActionFetchAccount, ActionFetchAccountError, ActionFetchAccountMenu, ActionFetchAccountMenuError, ActionFetchAccountMenuSuccess, ActionFetchAccountSuccess, ActionLoginSuccess, AuthActionTypes, ActionAddOrActiveTab, ActionRemoveTab } from './auth.actions';
 import { AuthService } from './auth.service';
 import { AUTH_KEY, AUTH_TOKEN, AUTH_ACCOUNT, AUTH_MENU, AUTH_TABS } from './auth.constants';
+import { MainMenuItems } from 'src/app/shared/menu-items/menu-items';
 
 @Injectable()
 export class AuthEffects {
@@ -118,7 +119,7 @@ export class AuthEffects {
         AuthActionTypes.TAB_ADD_OR_ACTIVE
       ),
       tap(action => {
-        const tabs: any[] = Object.assign([], this.localStorageService.getItem(AUTH_TABS));
+        const tabs: MainMenuItems[] = Object.assign([], this.localStorageService.getItem(AUTH_TABS));
         const index = tabs.findIndex(t => t.type === 'tab' && t.state === action.payload.state && t.mainState === action.payload.mainState);
         if (index === -1) {
           tabs.push(action.payload);
@@ -134,7 +135,7 @@ export class AuthEffects {
         AuthActionTypes.TAB_REMOVE
       ),
       tap(action => {
-        const tabs: any[] = Object.assign([], this.localStorageService.getItem(AUTH_TABS));
+        const tabs: MainMenuItems[] = Object.assign([], this.localStorageService.getItem(AUTH_TABS));
         const index = tabs.findIndex(t => t.type === 'tab' && t.state === action.payload.state && t.mainState === action.payload.mainState);
         if (index !== -1) {
           tabs.splice(index, 1);

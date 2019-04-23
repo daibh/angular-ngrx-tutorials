@@ -3,8 +3,12 @@ import { Injectable, Injector } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { SERVER_API_URL, API_ACCOUNT_LOGIN, API_ACCOUNT_GET_USER, API_ACCOUNT_GET_MENU_LIST } from 'src/app/app.constant';
+import { MainMenuItems } from 'src/app/shared/menu-items/menu-items';
+import { ICredentials } from 'src/app/shared/model/credentials.model';
+import { IUser } from 'src/app/shared/model/user.model';
 import { LocalStorageService } from '../local-storage/local-storage.service';
 import { AUTH_KEY, AUTH_TOKEN } from './auth.constants';
+import { parseJwt } from 'src/app/shared/util/common.util';
 import { Store } from '@ngrx/store';
 import { ActionAuthLogout } from './auth.actions';
 
@@ -16,7 +20,7 @@ export class AuthService {
     private injector: Injector
   ) { }
 
-  authenticate(credentials: any): Observable<string> {
+  authenticate(credentials: ICredentials): Observable<string> {
     // let param = {
     //   email: `${credentials.username}@huudai.com`,
     //   password: `${credentials.password}@niwa`,
@@ -37,19 +41,19 @@ export class AuthService {
       // const countDown = setInterval(() => {
       //   console.log('countdount: ', parseJwt(jwt).exp * 1000 - Date.now());
       // }, 1000);
-      // setTimeout(() => {
-      //   this.injector.get(Store).dispatch(new ActionAuthLogout());
-      //   // clearInterval(countDown);
-      // }, parseJwt(jwt).exp * 1000 - Date.now());
+      setTimeout(() => {
+        this.injector.get(Store).dispatch(new ActionAuthLogout());
+        // clearInterval(countDown);
+      }, parseJwt(jwt).exp * 1000 - Date.now());
       return jwt;
     }
   }
 
-  fetch(): Observable<any> {
-    return this.httpClient.get<any>(`${SERVER_API_URL}/${API_ACCOUNT_GET_USER}`);
+  fetch(): Observable<IUser> {
+    return this.httpClient.get<IUser>(`${SERVER_API_URL}/${API_ACCOUNT_GET_USER}`);
   }
 
-  fetchMenu(): Observable<any[]> {
-    return this.httpClient.get<any[]>(`${SERVER_API_URL}/${API_ACCOUNT_GET_MENU_LIST}`);
+  fetchMenu(): Observable<MainMenuItems[]> {
+    return this.httpClient.get<MainMenuItems[]>(`${SERVER_API_URL}/${API_ACCOUNT_GET_MENU_LIST}`);
   }
 }
